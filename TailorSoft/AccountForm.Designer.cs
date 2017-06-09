@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AccountForm));
             this.lblSelectMonthAndYear = new System.Windows.Forms.Label();
             this.cmbYear = new System.Windows.Forms.ComboBox();
             this.cmbMonths = new System.Windows.Forms.ComboBox();
@@ -97,7 +98,8 @@
             this.Controls.Add(this.cmbYear);
             this.Controls.Add(this.lblSelectMonthAndYear);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AccountForm";
             this.Text = "Accounts";
             this.ResumeLayout(false);
