@@ -1,0 +1,6 @@
+﻿
+1. Enable-Migrations -ConnectionStringName "DbContext" -ProjectName "TailorSoft.Database" -StartUpProjectName "TailorSoft"
+
+2. Add-Migration InitialCreate -ConnectionStringName "DbContext" -ProjectName "TailorSoft.Database" -StartUpProjectName "TailorSoft"
+
+3. Update-Database -ProjectName "TailorSoft.Database" -StartUpProjectName "TailorSoft"  -ConnectionStringName "DbContext" -Verbose
