@@ -380,8 +380,14 @@ namespace TailorSoft.Business
             {
                 try
                 {
-                    var bills = db.Database.SqlQuery<ExportBillInfo>(
-                        "EXEC [dbo].[spGetMonthlyBillDetails] @param1, @param2",
+                    var bookingBills = db.Database.SqlQuery<ExportBillInfo>(
+                        "EXEC [dbo].[spGetMonthlyBookingBillDetails] @param1, @param2",
+                        new SqlParameter("param1", start),
+                        new SqlParameter("param2", end)
+                    ).ToList();
+
+                    var billsDelivered = db.Database.SqlQuery<ExportBillInfo>(
+                        "EXEC [dbo].[spGetMonthlyDeliveredBillDetails] @param1, @param2",
                         new SqlParameter("param1", start),
                         new SqlParameter("param2", end)
                     ).ToList();
@@ -409,7 +415,7 @@ namespace TailorSoft.Business
 
                     var rowNumber = 0;
 
-                    foreach (var bill in bills)
+                    foreach (var bill in bookingBills)
                     {
                         rowNumber++;
 
@@ -466,38 +472,38 @@ namespace TailorSoft.Business
                         new ExportBillSummary
                         {
                             Name = "SUITS",
-                            Quantity = bills.Sum(x => x.NumberOfSuits),
-                            Amount = bills.Sum(x => x.AmountForSuits)
+                            Quantity = bookingBills.Sum(x => x.NumberOfSuits),
+                            Amount = bookingBills.Sum(x => x.AmountForSuits)
                         },
                         new ExportBillSummary
                         {
                             Name = "JACKETS",
-                            Quantity = bills.Sum(x => x.NumberOfJackets),
-                            Amount = bills.Sum(x => x.AmountForJackets)
+                            Quantity = bookingBills.Sum(x => x.NumberOfJackets),
+                            Amount = bookingBills.Sum(x => x.AmountForJackets)
                         },
                         new ExportBillSummary
                         {
                             Name = "SAFARIES",
-                            Quantity = bills.Sum(x => x.NumberOfSafary),
-                            Amount = bills.Sum(x => x.AmountForSafaries)
+                            Quantity = bookingBills.Sum(x => x.NumberOfSafary),
+                            Amount = bookingBills.Sum(x => x.AmountForSafaries)
                         },
                         new ExportBillSummary
                         {
                             Name = "TROUSERS",
-                            Quantity = bills.Sum(x => x.NumberOfTrousers),
-                            Amount = bills.Sum(x => x.AmountForTrousers)
+                            Quantity = bookingBills.Sum(x => x.NumberOfTrousers),
+                            Amount = bookingBills.Sum(x => x.AmountForTrousers)
                         },
                         new ExportBillSummary
                         {
                             Name = "SHIRTS",
-                            Quantity = bills.Sum(x => x.NumberOfShirts),
-                            Amount = bills.Sum(x => x.AmountForShirts)
+                            Quantity = bookingBills.Sum(x => x.NumberOfShirts),
+                            Amount = bookingBills.Sum(x => x.AmountForShirts)
                         },
                         new ExportBillSummary
                         {
                             Name = "OTHERS",
-                            Quantity = bills.Sum(x => x.NumberOfOthers),
-                            Amount = bills.Sum(x => x.AmountForOthers)
+                            Quantity = bookingBills.Sum(x => x.NumberOfOthers),
+                            Amount = bookingBills.Sum(x => x.AmountForOthers)
                         }
                     };
 
@@ -534,9 +540,6 @@ namespace TailorSoft.Business
                     #region Delivery Summary
 
                     rowNumber = 0;
-
-                    var billsDelivered = bills.Where(x => x.BillStatus.ToLower() == "delivered").ToList();
-
 
                     var billsDeliveredSummary = new List<ExportBillSummary>
                     {
