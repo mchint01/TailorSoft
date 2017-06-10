@@ -90,6 +90,7 @@
             this.txtCustomerPhoneSearch.Name = "txtCustomerPhoneSearch";
             this.txtCustomerPhoneSearch.Size = new System.Drawing.Size(211, 23);
             this.txtCustomerPhoneSearch.TabIndex = 0;
+            this.txtCustomerPhoneSearch.TextChanged += new System.EventHandler(this.txtCustomerPhoneSearch_TextChanged);
             // 
             // dgCustomers
             // 

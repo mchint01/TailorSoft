@@ -94,6 +94,11 @@ namespace TailorSoft
                 dgCustomerBills.Columns["CustomerId"].Visible = false;
             }
 
+            if (dgCustomerBills.Columns["CustomerName"] != null)
+            {
+                dgCustomerBills.Columns["CustomerName"].Visible = false;
+            }
+
             if (dgCustomerBills.Columns["SuitMeasurements"] != null)
             {
                 dgCustomerBills.Columns["SuitMeasurements"].Visible = false;
@@ -168,6 +173,16 @@ namespace TailorSoft
             {
                 dgCustomerBills.Columns["DeliveredDt"].Visible = false;
             }
+
+            if (dgCustomerBills.Columns["PreferredInternalDeliveryDt"] != null)
+            {
+                dgCustomerBills.Columns["PreferredInternalDeliveryDt"].Visible = false;
+            }
+
+            if (dgCustomerBills.Columns["Notes"] != null)
+            {
+                dgCustomerBills.Columns["Notes"].Visible = false;
+            }
         }
 
         private void dgCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -227,6 +242,16 @@ namespace TailorSoft
             var accountForm = new AccountForm();
 
             accountForm.ShowDialog();
+        }
+
+        private void txtCustomerPhoneSearch_TextChanged(object sender, EventArgs e)
+        {
+            lblCustomerSearchError.Text = null;
+            btnAddBill.Visible = false;
+            dgCustomers.Visible = false;
+            lblForDgCustomers.Visible = false;
+            dgCustomerBills.Visible = false;
+            lblForDgCustomerBills.Visible = false;
         }
     }
 }

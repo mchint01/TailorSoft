@@ -34,6 +34,7 @@
             this.cmbMonths = new System.Windows.Forms.ComboBox();
             this.btnExport = new System.Windows.Forms.Button();
             this.lblAccountsErrorMessage = new System.Windows.Forms.Label();
+            this.lblFilePath = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblSelectMonthAndYear
@@ -87,11 +88,21 @@
             this.lblAccountsErrorMessage.Text = "   ";
             this.lblAccountsErrorMessage.Visible = false;
             // 
+            // lblFilePath
+            // 
+            this.lblFilePath.AutoSize = true;
+            this.lblFilePath.Location = new System.Drawing.Point(39, 244);
+            this.lblFilePath.Name = "lblFilePath";
+            this.lblFilePath.Size = new System.Drawing.Size(20, 17);
+            this.lblFilePath.TabIndex = 5;
+            this.lblFilePath.Text = "   ";
+            // 
             // AccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1256, 450);
+            this.Controls.Add(this.lblFilePath);
             this.Controls.Add(this.lblAccountsErrorMessage);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.cmbMonths);
@@ -114,5 +125,6 @@
         private System.Windows.Forms.ComboBox cmbMonths;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Label lblAccountsErrorMessage;
+        private System.Windows.Forms.Label lblFilePath;
     }
 }

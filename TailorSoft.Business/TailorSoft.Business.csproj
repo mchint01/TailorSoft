@@ -78,6 +78,7 @@
     <Compile Include="Models\ComboItem.cs" />
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\ExportBillInfo.cs" />
+    <Compile Include="Models\ExportBillSummary.cs" />
     <Compile Include="Models\FileExportResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeHelper.cs" />

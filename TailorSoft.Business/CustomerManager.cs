@@ -39,6 +39,16 @@ namespace TailorSoft.Business
         private const int ExpBillIdColIndex = 23;
         private const int ExpTotalColCount = 24;
 
+        private const int ExpBookingSummaryNameColIndex = 0;
+        private const int ExpBookingSummaryQtyColIndex = 1;
+        private const int ExpBookingSummaryAmountColIndex = 2;
+        private const int ExpBookingSummaryTotalColCount = 3;
+
+        private const int ExpDeliveredSummaryNameColIndex = 0;
+        private const int ExpDeliveredSummaryQtyColIndex = 1;
+        private const int ExpDeliveredSummaryAmountColIndex = 2;
+        private const int ExpDeliveredSummaryTotalColCount = 3;
+
         private readonly ILogManager _logManager;
 
         public CustomerManager()
@@ -378,10 +388,24 @@ namespace TailorSoft.Business
 
                     var wb = new XSSFWorkbook();
 
-                    var sh = wb.CreateSheet($"TailorSoft Monthly Bills From {start} to {end}");
+                    var sheetBookingBillsSummary =
+                        wb.CreateSheet($"TailorSoft Booking Bills Summary From {start} to {end}");
+                    var sheetDeliveryBillsSummary =
+                        wb.CreateSheet($"TailorSoft Delivery Bills Summary From {start} to {end}");
+                    var sheetBookingBills = wb.CreateSheet($"TailorSoft Booking Bills From {start} to {end}");
 
-                    SetExcelSheetHeaders(sh);
-                    SetExcelSheetStyles(sh);
+                    SetExcelSheetHeadersBookingBillsDetails(sheetBookingBills);
+                    SetExcelSheetStylesBookingBillsDetails(sheetBookingBills);
+
+                    SetExcelSheetHeadersBookingBillsSummary(sheetBookingBillsSummary);
+                    SetExcelSheetStylesBookingBillsSummary(sheetBookingBillsSummary);
+
+                    SetExcelSheetHeadersDeliveryBillsSummary(sheetDeliveryBillsSummary);
+                    SetExcelSheetStylesDeliveryBillsSummary(sheetDeliveryBillsSummary);
+
+                    // sheetBookingBills
+
+                    #region Booking Details
 
                     var rowNumber = 0;
 
@@ -389,7 +413,7 @@ namespace TailorSoft.Business
                     {
                         rowNumber++;
 
-                        var row = sh.CreateRow(rowNumber);
+                        var row = sheetBookingBills.CreateRow(rowNumber);
 
                         for (var colNumber = 0; colNumber < ExpTotalColCount; colNumber++)
                         {
@@ -429,12 +453,168 @@ namespace TailorSoft.Business
                         row.GetCell(ExpBillIdColIndex).SetCellValue(bill.BillId.ToString());
                     }
 
+                    #endregion
+
+                    // sheetBookingBillsSummary
+
+                    #region Booking Summary
+
+                    rowNumber = 0;
+
+                    var billsBookingSummary = new List<ExportBillSummary>
+                    {
+                        new ExportBillSummary
+                        {
+                            Name = "SUITS",
+                            Quantity = bills.Sum(x => x.NumberOfSuits),
+                            Amount = bills.Sum(x => x.AmountForSuits)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "JACKETS",
+                            Quantity = bills.Sum(x => x.NumberOfJackets),
+                            Amount = bills.Sum(x => x.AmountForJackets)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "SAFARIES",
+                            Quantity = bills.Sum(x => x.NumberOfSafary),
+                            Amount = bills.Sum(x => x.AmountForSafaries)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "TROUSERS",
+                            Quantity = bills.Sum(x => x.NumberOfTrousers),
+                            Amount = bills.Sum(x => x.AmountForTrousers)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "SHIRTS",
+                            Quantity = bills.Sum(x => x.NumberOfShirts),
+                            Amount = bills.Sum(x => x.AmountForShirts)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "OTHERS",
+                            Quantity = bills.Sum(x => x.NumberOfOthers),
+                            Amount = bills.Sum(x => x.AmountForOthers)
+                        }
+                    };
+
+                    var totalQtyBookingSummary = billsBookingSummary.Sum(x => x.Quantity);
+                    var totalAmountBookingSummary = billsBookingSummary.Sum(x => x.Amount);
+
+                    billsBookingSummary.Add(new ExportBillSummary
+                    {
+                        Name = "TOTAL",
+                        Quantity = totalQtyBookingSummary,
+                        Amount = totalAmountBookingSummary
+                    });
+
+                    foreach (var summary in billsBookingSummary)
+                    {
+                        rowNumber++;
+
+                        var row = sheetBookingBillsSummary.CreateRow(rowNumber);
+
+                        for (var colNumber = 0; colNumber < ExpBookingSummaryTotalColCount; colNumber++)
+                        {
+                            row.CreateCell(colNumber, NPOI.SS.UserModel.CellType.String);
+                        }
+
+                        row.GetCell(ExpBookingSummaryNameColIndex).SetCellValue(summary.Name);
+                        row.GetCell(ExpBookingSummaryQtyColIndex).SetCellValue(summary.Quantity);
+                        row.GetCell(ExpBookingSummaryAmountColIndex).SetCellValue(Convert.ToDouble(summary.Amount));
+                    }
+
+                    #endregion
+
+                    // sheetDeliveryBillsSummary
+
+                    #region Delivery Summary
+
+                    rowNumber = 0;
+
+                    var billsDelivered = bills.Where(x => x.BillStatus.ToLower() == "delivered").ToList();
+
+
+                    var billsDeliveredSummary = new List<ExportBillSummary>
+                    {
+                        new ExportBillSummary
+                        {
+                            Name = "SUITS",
+                            Quantity = billsDelivered.Sum(x => x.NumberOfSuits),
+                            Amount = billsDelivered.Sum(x => x.AmountForSuits)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "JACKETS",
+                            Quantity = billsDelivered.Sum(x => x.NumberOfJackets),
+                            Amount = billsDelivered.Sum(x => x.AmountForJackets)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "SAFARIES",
+                            Quantity = billsDelivered.Sum(x => x.NumberOfSafary),
+                            Amount = billsDelivered.Sum(x => x.AmountForSafaries)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "TROUSERS",
+                            Quantity = billsDelivered.Sum(x => x.NumberOfTrousers),
+                            Amount = billsDelivered.Sum(x => x.AmountForTrousers)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "SHIRTS",
+                            Quantity = billsDelivered.Sum(x => x.NumberOfShirts),
+                            Amount = billsDelivered.Sum(x => x.AmountForShirts)
+                        },
+                        new ExportBillSummary
+                        {
+                            Name = "OTHERS",
+                            Quantity = billsDelivered.Sum(x => x.NumberOfOthers),
+                            Amount = billsDelivered.Sum(x => x.AmountForOthers)
+                        }
+                    };
+
+                    var totalQtyDeliveredSummary = billsDeliveredSummary.Sum(x => x.Quantity);
+                    var totalAmountDeliveredSummary = billsDeliveredSummary.Sum(x => x.Amount);
+
+                    billsDeliveredSummary.Add(new ExportBillSummary
+                    {
+                        Name = "TOTAL",
+                        Quantity = totalQtyDeliveredSummary,
+                        Amount = totalAmountDeliveredSummary
+                    });
+
+                    foreach (var summary in billsDeliveredSummary)
+                    {
+                        rowNumber++;
+
+                        var row = sheetDeliveryBillsSummary.CreateRow(rowNumber);
+
+                        for (var colNumber = 0; colNumber < ExpDeliveredSummaryTotalColCount; colNumber++)
+                        {
+                            row.CreateCell(colNumber, NPOI.SS.UserModel.CellType.String);
+                        }
+
+                        row.GetCell(ExpDeliveredSummaryNameColIndex).SetCellValue(summary.Name);
+                        row.GetCell(ExpDeliveredSummaryQtyColIndex).SetCellValue(summary.Quantity);
+                        row.GetCell(ExpDeliveredSummaryAmountColIndex).SetCellValue(Convert.ToDouble(summary.Amount));
+                    }
+
+
+                    #endregion
+
                     wb.Write(ms);
 
                     return new FileExportResponse()
                     {
                         Data = ms.ToArray(),
-                        FileName = string.Format($"TailorSoft Monthly Bills From {start.ToString("yyyy-dd-M--HH-mm-ss")} to {end.ToString("yyyy-dd-M--HH-mm-ss")}.xlsx")
+                        FileName =
+                            string.Format(
+                                $"TailorSoft Bills From {start.ToString("yyyy-dd-M--HH-mm-ss")} to {end.ToString("yyyy-dd-M--HH-mm-ss")}.xlsx")
                     };
                 }
 
@@ -450,7 +630,7 @@ namespace TailorSoft.Business
 
         #region Private Members
 
-        private static void SetExcelSheetHeaders(ISheet sh)
+        private static void SetExcelSheetHeadersBookingBillsDetails(ISheet sh)
         {
             var headerRow = sh.CreateRow(0);
 
@@ -492,7 +672,7 @@ namespace TailorSoft.Business
             headerRow.GetCell(ExpBillIdColIndex).SetCellValue("Internal Bill ID");
         }
 
-        private static void SetExcelSheetStyles(ISheet sh)
+        private static void SetExcelSheetStylesBookingBillsDetails(ISheet sh)
         {
             // 0.72 is base width of column
             // 1/256 character factor
@@ -527,6 +707,52 @@ namespace TailorSoft.Business
 
             sh.SetColumnWidth(ExpCustomerIdColIndex, (int) ((45 + 0.72)*256));
             sh.SetColumnWidth(ExpBillIdColIndex, (int) ((45 + 0.72)*256));
+        }
+
+        private static void SetExcelSheetHeadersBookingBillsSummary(ISheet sh)
+        {
+            var headerRow = sh.CreateRow(0);
+
+            for (var colNumber = 0; colNumber < ExpBookingSummaryTotalColCount; colNumber++)
+            {
+                headerRow.CreateCell(colNumber, NPOI.SS.UserModel.CellType.String);
+            }
+
+            headerRow.GetCell(ExpBookingSummaryNameColIndex).SetCellValue("Name");
+            headerRow.GetCell(ExpBookingSummaryQtyColIndex).SetCellValue("Qty");
+            headerRow.GetCell(ExpBookingSummaryAmountColIndex).SetCellValue("Amount");
+        }
+
+        private static void SetExcelSheetStylesBookingBillsSummary(ISheet sh)
+        {
+            // 0.72 is base width of column
+            // 1/256 character factor
+            sh.SetColumnWidth(ExpBookingSummaryNameColIndex, (int)((20 + 0.72) * 256));
+            sh.SetColumnWidth(ExpBookingSummaryQtyColIndex, (int)((20 + 0.72) * 256));
+            sh.SetColumnWidth(ExpBookingSummaryAmountColIndex, (int)((30 + 0.72) * 256));
+        }
+
+        private static void SetExcelSheetHeadersDeliveryBillsSummary(ISheet sh)
+        {
+            var headerRow = sh.CreateRow(0);
+
+            for (var colNumber = 0; colNumber < ExpBookingSummaryTotalColCount; colNumber++)
+            {
+                headerRow.CreateCell(colNumber, NPOI.SS.UserModel.CellType.String);
+            }
+
+            headerRow.GetCell(ExpDeliveredSummaryNameColIndex).SetCellValue("Name");
+            headerRow.GetCell(ExpDeliveredSummaryQtyColIndex).SetCellValue("Qty");
+            headerRow.GetCell(ExpDeliveredSummaryAmountColIndex).SetCellValue("Amount");
+        }
+
+        private static void SetExcelSheetStylesDeliveryBillsSummary(ISheet sh)
+        {
+            // 0.72 is base width of column
+            // 1/256 character factor
+            sh.SetColumnWidth(ExpDeliveredSummaryNameColIndex, (int) ((20 + 0.72)*256));
+            sh.SetColumnWidth(ExpDeliveredSummaryQtyColIndex, (int) ((20 + 0.72)*256));
+            sh.SetColumnWidth(ExpDeliveredSummaryAmountColIndex, (int) ((30 + 0.72)*256));
         }
 
         #endregion

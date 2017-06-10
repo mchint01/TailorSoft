@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using TailorSoft.Business;
@@ -107,6 +108,8 @@ namespace TailorSoft
             };
 
             cmbMonths.SelectedValue = currentMonth.ToString();
+
+            lblFilePath.Text = $@"Excel reports are located at {ConfigurationManager.AppSettings["ExportPath"]}";
         }
 
         private void btnExport_Click(object sender, EventArgs e)
@@ -141,6 +144,9 @@ namespace TailorSoft
                 fs.Close();
 
                 Close();
+
+                // opens folder
+                Process.Start(ConfigurationManager.AppSettings["ExportPath"]);
             }
 
             catch (Exception ex)
