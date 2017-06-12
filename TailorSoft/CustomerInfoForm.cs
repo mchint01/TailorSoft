@@ -24,14 +24,17 @@ namespace TailorSoft
 
             _customerId = customerId;
 
-            if (_customerId != null && _customerId.Value != Guid.Empty)
-            {
-                var customer = _customerManager.GetCustomerInfo(_customerId.Value);
+            if (_customerId == null || _customerId.Value == Guid.Empty) return;
 
-                txtCustomerName.Text = customer.Name;
-                txtCustomerAddress.Text = customer.Address;
-                txtCustomerPhone.Text = customer.Phone;
-            }
+            Cursor.Current = Cursors.WaitCursor;
+
+            var customer = _customerManager.GetCustomerInfo(_customerId.Value);
+
+            txtCustomerName.Text = customer.Name;
+            txtCustomerAddress.Text = customer.Address;
+            txtCustomerPhone.Text = customer.Phone;
+
+            Cursor.Current = Cursors.Arrow;
         }
 
         private void btnAddCustomerInfo_Click(object sender, EventArgs e)
@@ -60,6 +63,8 @@ namespace TailorSoft
                 Phone = txtCustomerPhone.Text
             };
 
+            Cursor.Current = Cursors.WaitCursor;
+
             try
             {
                 if (_customerId == null || _customerId.Value == Guid.Empty)
@@ -82,6 +87,8 @@ namespace TailorSoft
 
                 lblAddCustomerFormError.Text = ex.Message;
             }
+
+            Cursor.Current = Cursors.Arrow;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
