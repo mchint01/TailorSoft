@@ -2,7 +2,7 @@
 
 namespace TailorSoft.Business.Models
 {
-    public class BillInfo
+    public class BillInfo : Measurements
     {
         public Guid Id { get; set; }
 
@@ -13,18 +13,6 @@ namespace TailorSoft.Business.Models
         public string CustomerName { get; set; }
 
         public string BillStatus { get; set; }
-
-        public string SuitMeasurements { get; set; }
-
-        public string JacketMeasurements { get; set; }
-
-        public string SafaryMeasurements { get; set; }
-
-        public string TrouserMeasurements { get; set; }
-
-        public string ShirtMeasurements { get; set; }
-
-        public string OtherMeasurements { get; set; }
 
         public decimal SuitRate { get; set; }
 

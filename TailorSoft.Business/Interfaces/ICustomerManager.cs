@@ -23,5 +23,7 @@ namespace TailorSoft.Business.Interfaces
         IList<BillInfo> GetCustomerBills(Guid customerId);
 
         FileExportResponse ExportMonthlyBillDetailsAsExcel(DateTime start, DateTime end);
+
+        Measurements GetLatestCustomerMeasurements(Guid customerId);
     }
 }

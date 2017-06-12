@@ -82,6 +82,14 @@
     <Compile Include="Migrations\201706091325232_NoteMigration.Designer.cs">
       <DependentUpon>201706091325232_NoteMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706121145161_BillIndexMigration.cs" />
+    <Compile Include="Migrations\201706121145161_BillIndexMigration.Designer.cs">
+      <DependentUpon>201706121145161_BillIndexMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706121146289_BillIndexModifiedMigration.cs" />
+    <Compile Include="Migrations\201706121146289_BillIndexModifiedMigration.Designer.cs">
+      <DependentUpon>201706121146289_BillIndexModifiedMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -116,6 +124,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706091325232_NoteMigration.resx">
       <DependentUpon>201706091325232_NoteMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706121145161_BillIndexMigration.resx">
+      <DependentUpon>201706121145161_BillIndexMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706121146289_BillIndexModifiedMigration.resx">
+      <DependentUpon>201706121146289_BillIndexModifiedMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Windows.Forms;
 using TailorSoft.Business;
@@ -33,7 +34,25 @@ namespace TailorSoft
 
             _logManager = new LogManager();
 
-            if (_billId == null || _billId.Value == Guid.Empty) return;
+            if (_billId == null || _billId.Value == Guid.Empty)
+            {
+                if (!Convert.ToBoolean(
+                    ConfigurationManager.AppSettings["GetLatestMeasurementsOnNewBill"])) return;
+
+                var measurements =
+                    _customerManager.GetLatestCustomerMeasurements(_customerId);
+
+                if (measurements == null) return;
+
+                txtSuitMeasurement.Text = measurements.SuitMeasurements;
+                txtJacketMeasurement.Text = measurements.JacketMeasurements;
+                txtSafaryMeasurement.Text = measurements.SafaryMeasurements;
+                txtTrouserMeasurement.Text = measurements.TrouserMeasurements;
+                txtShirtMeasurement.Text = measurements.ShirtMeasurements;
+                txtOtherMeasurement.Text = measurements.OtherMeasurements;
+
+                return;
+            }
 
             Cursor.Current = Cursors.WaitCursor;
 

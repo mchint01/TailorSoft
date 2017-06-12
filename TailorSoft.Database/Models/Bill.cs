@@ -15,16 +15,28 @@ namespace TailorSoft.Database.Models
 
         public Guid CustomerId { get; set; }
 
+        [MaxLength(440)]
+        [Index("IX_Bill_SuitMeasurements", IsUnique = false)]
         public string SuitMeasurements { get; set; }
 
+        [MaxLength(440)]
+        [Index("IX_Bill_JacketMeasurements", IsUnique = false)]
         public string JacketMeasurements { get; set; }
 
+        [MaxLength(440)]
+        [Index("IX_Bill_SafaryMeasurements", IsUnique = false)]
         public string SafaryMeasurements { get; set; }
 
+        [MaxLength(440)]
+        [Index("IX_Bill_TrouserMeasurements", IsUnique = false)]
         public string TrouserMeasurements { get; set; }
 
+        [MaxLength(440)]
+        [Index("IX_Bill_ShirtMeasurements", IsUnique = false)]
         public string ShirtMeasurements { get; set; }
 
+        [MaxLength(440)]
+        [Index("IX_Bill_OtherMeasurements", IsUnique = false)]
         public string OtherMeasurements { get; set; }
 
         public decimal SuitRate { get; set; }

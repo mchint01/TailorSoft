@@ -133,9 +133,12 @@ namespace TailorSoft
 
                 var file = _customerManager.ExportMonthlyBillDetailsAsExcel(startDate, endDate);
 
-                var fs = new FileStream(
-                    Path.Combine(ConfigurationManager.AppSettings["ExportPath"], file.FileName),
-                    FileMode.Create);
+                var filePath = Path.Combine(ConfigurationManager.AppSettings["ExportPath"],
+                    file.FileName);
+
+                var fs = new FileStream(filePath,
+                    FileMode.Create,
+                    FileAccess.ReadWrite);
 
                 var bw = new BinaryWriter(fs);
 

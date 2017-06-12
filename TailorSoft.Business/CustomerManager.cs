@@ -632,6 +632,19 @@ namespace TailorSoft.Business
             }
         }
 
+        public Measurements GetLatestCustomerMeasurements(Guid customerId)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var measurements = db.Database.SqlQuery<Measurements>(
+                    "EXEC [dbo].[spGetLatestCustomerMeasurements] @param1",
+                    new SqlParameter("param1", customerId)
+                ).FirstOrDefault();
+
+                return measurements;
+            }
+        }
+
         #region Private Members
 
         private static void SetExcelSheetHeadersBookingBillsDetails(ISheet sh)

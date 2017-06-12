@@ -80,6 +80,7 @@
     <Compile Include="Models\ExportBillInfo.cs" />
     <Compile Include="Models\ExportBillSummary.cs" />
     <Compile Include="Models\FileExportResponse.cs" />
+    <Compile Include="Models\Measurements.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimeHelper.cs" />
   </ItemGroup>
