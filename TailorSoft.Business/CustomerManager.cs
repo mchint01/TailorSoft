@@ -397,8 +397,9 @@ namespace TailorSoft.Business
                     var sheetBookingBillsSummary =
                         wb.CreateSheet($"TailorSoft Booking Bills Summary From {start} to {end}");
                     var sheetDeliveryBillsSummary =
-                        wb.CreateSheet($"TailorSoft Delivery Bills Summary From {start} to {end}");
-                    var sheetBookingBills = wb.CreateSheet($"TailorSoft Booking Bills From {start} to {end}");
+                        wb.CreateSheet($"TailorSoft Delivered Bills Summary From {start} to {end}");
+                    var sheetBookingBills =
+                        wb.CreateSheet($"TailorSoft Booking Bills From {start} to {end}");
 
                     SetExcelSheetHeadersBookingBillsDetails(sheetBookingBills);
                     SetExcelSheetStylesBookingBillsDetails(sheetBookingBills);

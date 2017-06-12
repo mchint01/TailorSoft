@@ -35,6 +35,8 @@ namespace TailorSoft
 
             if (_billId == null || _billId.Value == Guid.Empty) return;
 
+            Cursor.Current = Cursors.WaitCursor;
+
             var billInfo = _customerManager.GetBillInfo(_billId.Value);
 
             txtBillNumber.Text = Convert.ToString(billInfo.BillNumber);
@@ -109,6 +111,8 @@ namespace TailorSoft
                    ToString("F");
 
             CalculateTotalAmount();
+
+            Cursor.Current = Cursors.Arrow;
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
@@ -121,6 +125,8 @@ namespace TailorSoft
 
                 return;
             }
+
+            Cursor.Current = Cursors.WaitCursor;
 
             var bill = new BillInfo
             {
@@ -192,11 +198,15 @@ namespace TailorSoft
                     _customerManager.UpdateBillInfo(bill);
                 }
 
+                Cursor.Current = Cursors.Arrow;
+
                 Close();
             }
 
             catch (Exception ex)
             {
+                Cursor.Current = Cursors.Arrow;
+
                 _logManager.LogMessage(ex.Message,
                     ex.InnerException?.ToString());
 

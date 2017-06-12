@@ -44,6 +44,8 @@ namespace TailorSoft
                 return;
             }
 
+            Cursor.Current = Cursors.WaitCursor;
+
             // get customer
             var customer = _customerManager.GetCustomerInfo(txtCustomerPhoneSearch.Text);
 
@@ -51,6 +53,8 @@ namespace TailorSoft
             {
                 lblCustomerSearchError.Text = $@"Customer with phone number {txtCustomerPhoneSearch.Text} not found." +
                                               Environment.NewLine + @"Add Customer to create a new record.";
+
+                Cursor.Current = Cursors.Arrow;
 
                 return;
             }
@@ -183,6 +187,8 @@ namespace TailorSoft
             {
                 dgCustomerBills.Columns["Notes"].Visible = false;
             }
+
+            Cursor.Current = Cursors.Arrow;
         }
 
         private void dgCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -252,6 +258,13 @@ namespace TailorSoft
             lblForDgCustomers.Visible = false;
             dgCustomerBills.Visible = false;
             lblForDgCustomerBills.Visible = false;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new AboutForm();
+
+            aboutForm.ShowDialog();
         }
     }
 }

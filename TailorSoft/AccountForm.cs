@@ -116,6 +116,7 @@ namespace TailorSoft
         {
             lblAccountsErrorMessage.Text = null;
             lblAccountsErrorMessage.Visible = false;
+            Cursor.Current = Cursors.WaitCursor;
 
             try
             {
@@ -143,6 +144,8 @@ namespace TailorSoft
                 bw.Close();
                 fs.Close();
 
+                Cursor.Current = Cursors.Arrow;
+
                 Close();
 
                 // opens folder
@@ -151,9 +154,26 @@ namespace TailorSoft
 
             catch (Exception ex)
             {
+                Cursor.Current = Cursors.Arrow;
+
                 lblAccountsErrorMessage.Visible = true;
                 lblAccountsErrorMessage.Text = ex.Message;
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

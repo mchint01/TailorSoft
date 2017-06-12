@@ -35,6 +35,7 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.lblAccountsErrorMessage = new System.Windows.Forms.Label();
             this.lblFilePath = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblSelectMonthAndYear
@@ -97,11 +98,25 @@
             this.lblFilePath.TabIndex = 5;
             this.lblFilePath.Text = "   ";
             // 
+            // btnCancel
+            // 
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.Location = new System.Drawing.Point(620, 108);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(138, 27);
+            this.btnCancel.TabIndex = 6;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // AccountForm
             // 
+            this.AcceptButton = this.btnExport;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1256, 450);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(953, 369);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblFilePath);
             this.Controls.Add(this.lblAccountsErrorMessage);
             this.Controls.Add(this.btnExport);
@@ -112,7 +127,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AccountForm";
-            this.Text = "Accounts";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "TailorSoft - Accounts";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,5 +142,6 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Label lblAccountsErrorMessage;
         private System.Windows.Forms.Label lblFilePath;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

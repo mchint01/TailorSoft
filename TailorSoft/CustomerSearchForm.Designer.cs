@@ -45,6 +45,7 @@
             this.menu = new System.Windows.Forms.MenuStrip();
             this.MenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuAccounts = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgCustomers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgCustomerBills)).BeginInit();
             this.menu.SuspendLayout();
@@ -203,7 +204,8 @@
             // MenuItem
             // 
             this.MenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.MenuAccounts});
+            this.MenuAccounts,
+            this.aboutToolStripMenuItem});
             this.MenuItem.Name = "MenuItem";
             this.MenuItem.Size = new System.Drawing.Size(50, 20);
             this.MenuItem.Text = "Menu";
@@ -214,6 +216,13 @@
             this.MenuAccounts.Size = new System.Drawing.Size(152, 22);
             this.MenuAccounts.Text = "Accounts";
             this.MenuAccounts.Click += new System.EventHandler(this.MenuAccounts_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // CustomerSearchForm
             // 
@@ -263,5 +272,6 @@
         private System.Windows.Forms.MenuStrip menu;
         private System.Windows.Forms.ToolStripMenuItem MenuItem;
         private System.Windows.Forms.ToolStripMenuItem MenuAccounts;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
