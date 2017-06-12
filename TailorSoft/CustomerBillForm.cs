@@ -39,8 +39,12 @@ namespace TailorSoft
                 if (!Convert.ToBoolean(
                     ConfigurationManager.AppSettings["GetLatestMeasurementsOnNewBill"])) return;
 
+                Cursor.Current = Cursors.WaitCursor;
+
                 var measurements =
                     _customerManager.GetLatestCustomerMeasurements(_customerId);
+
+                Cursor.Current = Cursors.Arrow;
 
                 if (measurements == null) return;
 
