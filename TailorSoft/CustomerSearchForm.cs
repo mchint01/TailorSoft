@@ -21,6 +21,9 @@ namespace TailorSoft
 
         private void AddCustomer_Click(object sender, EventArgs e)
         {
+            txtCustomerPhoneSearch_TextChanged(sender, e);
+            txtCustomerPhoneSearch.Text = null;
+
             var addCustomerForm = new CustomerInfoForm();
 
             addCustomerForm.ShowDialog();
@@ -28,12 +31,7 @@ namespace TailorSoft
 
         private void btnSearchCustomerByPhone_Click(object sender, EventArgs e)
         {
-            lblCustomerSearchError.Text = null;
-            btnAddBill.Visible = false;
-            dgCustomers.Visible = false;
-            lblForDgCustomers.Visible = false;
-            dgCustomerBills.Visible = false;
-            lblForDgCustomerBills.Visible = false;
+            txtCustomerPhoneSearch_TextChanged(sender, e);
 
             if (string.IsNullOrWhiteSpace(txtCustomerPhoneSearch.Text) ||
                 txtCustomerPhoneSearch.Text.Length > 14 ||

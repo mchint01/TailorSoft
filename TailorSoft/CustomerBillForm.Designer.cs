@@ -85,6 +85,7 @@
             this.dtPreferredInternalDeliveryDt = new System.Windows.Forms.DateTimePicker();
             this.txtNote = new System.Windows.Forms.TextBox();
             this.lblNotes = new System.Windows.Forms.Label();
+            this.lblTotal = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -663,12 +664,23 @@
             this.lblNotes.TabIndex = 55;
             this.lblNotes.Text = "Notes";
             // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotal.Location = new System.Drawing.Point(664, 569);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(59, 17);
+            this.lblTotal.TabIndex = 56;
+            this.lblTotal.Text = "TOTAL";
+            // 
             // CustomerBillForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(1157, 616);
+            this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.txtNote);
             this.Controls.Add(this.lblPreferredInternalDeliveryDt);
@@ -792,5 +804,6 @@
         private System.Windows.Forms.DateTimePicker dtPreferredInternalDeliveryDt;
         private System.Windows.Forms.TextBox txtNote;
         private System.Windows.Forms.Label lblNotes;
+        private System.Windows.Forms.Label lblTotal;
     }
 }
