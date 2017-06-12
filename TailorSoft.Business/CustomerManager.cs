@@ -400,9 +400,14 @@ namespace TailorSoft.Business
                         wb.CreateSheet($"TailorSoft Delivered Bills Summary From {start} to {end}");
                     var sheetBookingBills =
                         wb.CreateSheet($"TailorSoft Booking Bills From {start} to {end}");
+                    var sheetDeliveredBills =
+                        wb.CreateSheet($"TailorSoft Delivered Bills From {start} to {end}");
 
                     SetExcelSheetHeadersBookingBillsDetails(sheetBookingBills);
                     SetExcelSheetStylesBookingBillsDetails(sheetBookingBills);
+
+                    SetExcelSheetHeadersBookingBillsDetails(sheetDeliveredBills);
+                    SetExcelSheetStylesBookingBillsDetails(sheetDeliveredBills);
 
                     SetExcelSheetHeadersBookingBillsSummary(sheetBookingBillsSummary);
                     SetExcelSheetStylesBookingBillsSummary(sheetBookingBillsSummary);
@@ -421,6 +426,58 @@ namespace TailorSoft.Business
                         rowNumber++;
 
                         var row = sheetBookingBills.CreateRow(rowNumber);
+
+                        for (var colNumber = 0; colNumber < ExpTotalColCount; colNumber++)
+                        {
+                            row.CreateCell(colNumber, NPOI.SS.UserModel.CellType.String);
+                        }
+
+                        row.GetCell(ExpCustomerNameColIndex).SetCellValue(bill.CustomerName);
+                        row.GetCell(ExpBillNumberColIndex).SetCellValue(bill.BillNumber);
+                        row.GetCell(ExpBillDtColIndex).SetCellValue(bill.BillDt.ToString("MMMM dd, yyyy"));
+                        row.GetCell(ExpBillStatusColIndex).SetCellValue(bill.BillStatus);
+
+                        row.GetCell(ExpNumberOfSuitsColIndex).SetCellValue(bill.NumberOfSuits);
+                        row.GetCell(ExpSuitRateColIndex).SetCellValue(Convert.ToDouble(bill.SuitRate));
+                        row.GetCell(ExpAmountForSuitsColIndex).SetCellValue(Convert.ToDouble(bill.AmountForSuits));
+
+                        row.GetCell(ExpNumberOfJacketsColIndex).SetCellValue(bill.NumberOfJackets);
+                        row.GetCell(ExpJacketRateColIndex).SetCellValue(Convert.ToDouble(bill.JacketRate));
+                        row.GetCell(ExpAmountForJacketsColIndex).SetCellValue(Convert.ToDouble(bill.AmountForJackets));
+
+                        row.GetCell(ExpNumberOfSafaryColIndex).SetCellValue(bill.NumberOfSafary);
+                        row.GetCell(ExpSafaryRateColIndex).SetCellValue(Convert.ToDouble(bill.SafaryRate));
+                        row.GetCell(ExpAmountForSafariesColIndex).SetCellValue(Convert.ToDouble(bill.AmountForSafaries));
+
+                        row.GetCell(ExpNumberOfTrousersColIndex).SetCellValue(bill.NumberOfTrousers);
+                        row.GetCell(ExpTrouserRateColIndex).SetCellValue(Convert.ToDouble(bill.TrouserRate));
+                        row.GetCell(ExpAmountForTrousersColIndex).SetCellValue(Convert.ToDouble(bill.AmountForTrousers));
+
+                        row.GetCell(ExpNumberOfShirtsColIndex).SetCellValue(bill.NumberOfShirts);
+                        row.GetCell(ExpShirtRateColIndex).SetCellValue(Convert.ToDouble(bill.ShirtRate));
+                        row.GetCell(ExpAmountForShirtsColIndex).SetCellValue(Convert.ToDouble(bill.AmountForShirts));
+
+                        row.GetCell(ExpNumberOfOthersColIndex).SetCellValue(bill.NumberOfOthers);
+                        row.GetCell(ExpOtherRateColIndex).SetCellValue(Convert.ToDouble(bill.OtherRate));
+                        row.GetCell(ExpAmountForOthersColIndex).SetCellValue(Convert.ToDouble(bill.AmountForOthers));
+
+                        row.GetCell(ExpCustomerIdColIndex).SetCellValue(bill.CustomerId.ToString());
+                        row.GetCell(ExpBillIdColIndex).SetCellValue(bill.BillId.ToString());
+                    }
+
+                    #endregion
+
+                    // sheetDeliveredBills
+
+                    #region Delivered Details
+
+                    rowNumber = 0;
+
+                    foreach (var bill in billsDelivered)
+                    {
+                        rowNumber++;
+
+                        var row = sheetDeliveredBills.CreateRow(rowNumber);
 
                         for (var colNumber = 0; colNumber < ExpTotalColCount; colNumber++)
                         {
