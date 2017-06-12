@@ -675,7 +675,7 @@ namespace TailorSoft.Business
                         Data = ms.ToArray(),
                         FileName =
                             string.Format(
-                                $"TailorSoft Bills From {start.ToString("yyyy-dd-M--HH-mm-ss")} to {end.ToString("yyyy-dd-M--HH-mm-ss")}.xlsx")
+                                $"TailorSoft Bills From {start:MMMM dd, yyyy} to {end:MMMM dd, yyyy}.xlsx")
                     };
                 }
 
