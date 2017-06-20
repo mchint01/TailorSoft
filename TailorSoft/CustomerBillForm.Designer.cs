@@ -86,6 +86,8 @@
             this.txtNote = new System.Windows.Forms.TextBox();
             this.lblNotes = new System.Windows.Forms.Label();
             this.lblTotal = new System.Windows.Forms.Label();
+            this.btnPicture = new System.Windows.Forms.Button();
+            this.btnUploadNewDrawings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -674,12 +676,37 @@
             this.lblTotal.TabIndex = 56;
             this.lblTotal.Text = "TOTAL";
             // 
+            // btnPicture
+            // 
+            this.btnPicture.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPicture.Location = new System.Drawing.Point(787, 512);
+            this.btnPicture.Name = "btnPicture";
+            this.btnPicture.Size = new System.Drawing.Size(128, 28);
+            this.btnPicture.TabIndex = 57;
+            this.btnPicture.Text = "See Drawings";
+            this.btnPicture.UseVisualStyleBackColor = true;
+            this.btnPicture.Visible = false;
+            this.btnPicture.Click += new System.EventHandler(this.btnPicture_Click);
+            // 
+            // btnUploadNewDrawings
+            // 
+            this.btnUploadNewDrawings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUploadNewDrawings.Location = new System.Drawing.Point(657, 512);
+            this.btnUploadNewDrawings.Name = "btnUploadNewDrawings";
+            this.btnUploadNewDrawings.Size = new System.Drawing.Size(128, 28);
+            this.btnUploadNewDrawings.TabIndex = 58;
+            this.btnUploadNewDrawings.Text = "Upload Drawings";
+            this.btnUploadNewDrawings.UseVisualStyleBackColor = true;
+            this.btnUploadNewDrawings.Click += new System.EventHandler(this.btnUploadNewDrawings_Click);
+            // 
             // CustomerBillForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(1157, 616);
+            this.Controls.Add(this.btnUploadNewDrawings);
+            this.Controls.Add(this.btnPicture);
             this.Controls.Add(this.lblTotal);
             this.Controls.Add(this.lblNotes);
             this.Controls.Add(this.txtNote);
@@ -805,5 +832,7 @@
         private System.Windows.Forms.TextBox txtNote;
         private System.Windows.Forms.Label lblNotes;
         private System.Windows.Forms.Label lblTotal;
+        private System.Windows.Forms.Button btnPicture;
+        private System.Windows.Forms.Button btnUploadNewDrawings;
     }
 }

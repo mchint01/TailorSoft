@@ -149,7 +149,7 @@ namespace TailorSoft.Business
             }
         }
 
-        public void AddBillInfo(BillInfo billInfo)
+        public Guid AddBillInfo(BillInfo billInfo)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -161,9 +161,11 @@ namespace TailorSoft.Business
                     throw new Exception("Customer record not found.");
                 }
 
+                var billId = Guid.NewGuid();
+
                 db.Bills.Add(new Database.Models.Bill
                 {
-                    Id = Guid.NewGuid(),
+                    Id = billId,
                     BillNumber = billInfo.BillNumber,
                     CustomerId = billInfo.CustomerId,
                     CreatedDt = TimeHelper.GetCurrentDateTime(),
@@ -203,6 +205,8 @@ namespace TailorSoft.Business
                 });
 
                 db.SaveChanges();
+
+                return billId;
             }
         }
 

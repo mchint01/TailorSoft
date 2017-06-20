@@ -14,7 +14,7 @@ namespace TailorSoft.Business.Interfaces
 
         void UpdateCustomerInfo(CustomerInfo customerInfo);
 
-        void AddBillInfo(BillInfo billInfo);
+        Guid AddBillInfo(BillInfo billInfo);
 
         void UpdateBillInfo(BillInfo billInfo);
 

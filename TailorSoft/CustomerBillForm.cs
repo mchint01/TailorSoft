@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using TailorSoft.Business;
 using TailorSoft.Business.Interfaces;
@@ -11,6 +16,8 @@ namespace TailorSoft
     public partial class CustomerBillForm : Form
     {
         private readonly Guid _customerId;
+
+        private IList<string> _newlyUploadedFiles;
 
         private readonly ICustomerManager _customerManager;
 
@@ -33,6 +40,8 @@ namespace TailorSoft
             _customerManager = new CustomerManager();
 
             _logManager = new LogManager();
+
+            _newlyUploadedFiles = new List<string>();
 
             if (_billId == null || _billId.Value == Guid.Empty)
             {
@@ -135,6 +144,8 @@ namespace TailorSoft
 
             CalculateTotalAmount();
 
+            btnPicture.Visible = !string.IsNullOrWhiteSpace(GetPicturesFolderPath());
+
             Cursor.Current = Cursors.Arrow;
         }
 
@@ -209,16 +220,43 @@ namespace TailorSoft
 
             try
             {
+                Guid currentBillId;
+
                 if (_billId == null || _billId.Value == Guid.Empty)
                 {
-                    _customerManager.AddBillInfo(bill);
+                    currentBillId = _customerManager.AddBillInfo(bill);
                 }
 
                 else
                 {
                     bill.Id = _billId.Value;
 
+                    currentBillId = _billId.Value;
+
                     _customerManager.UpdateBillInfo(bill);
+                }
+
+                if (_newlyUploadedFiles.Any())
+                {
+                    var folderPath = Path.Combine(
+                        ConfigurationManager.AppSettings["DrawingsPath"],
+                        _customerId.ToString(),
+                        currentBillId.ToString());
+
+                    if (!Directory.Exists(folderPath))
+                        Directory.CreateDirectory(folderPath);
+
+                    foreach (var sourceFile in _newlyUploadedFiles)
+                    {
+                        var filePath = Path.Combine(folderPath,
+                            Guid.NewGuid().ToString());
+
+                        filePath = string.Concat(filePath,
+                            // ReSharper disable once AssignNullToNotNullAttribute
+                            Path.GetExtension(sourceFile));
+
+                        File.Copy(sourceFile, filePath, true);
+                    }
                 }
 
                 Cursor.Current = Cursors.Arrow;
@@ -427,6 +465,31 @@ namespace TailorSoft
             AllowNumberOnly(e);
         }
 
+        private void btnPicture_Click(object sender, EventArgs e)
+        {
+            var path = GetPicturesFolderPath();
+
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                Process.Start(path);
+            }
+        }
+
+        private void btnUploadNewDrawings_Click(object sender, EventArgs e)
+        {
+            var open = new OpenFileDialog
+            {
+                Filter = @"Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp"
+            };
+
+            if (open.ShowDialog() != DialogResult.OK) return;
+
+            if (!_newlyUploadedFiles.Contains(open.FileName))
+            {
+                _newlyUploadedFiles.Add(open.FileName);
+            }
+        }
+
         #region Internal Members
 
         private static void AllowNumberOnly(KeyPressEventArgs e)
@@ -496,8 +559,6 @@ namespace TailorSoft
             return string.IsNullOrWhiteSpace(obj) ? null : obj;
         }
 
-        #endregion
-
         private void OnLoad()
         {
             dtBillDt.Value = TimeHelper.GetCurrentDateTime();
@@ -530,5 +591,19 @@ namespace TailorSoft
                 }
             };
         }
+
+        private string GetPicturesFolderPath()
+        {
+            if (_billId == null || _billId.Value == Guid.Empty) return null;
+
+            var folderPath = Path.Combine(
+                ConfigurationManager.AppSettings["DrawingsPath"],
+                _customerId.ToString(),
+                _billId.Value.ToString());
+
+            return Directory.Exists(folderPath) ? folderPath : null;
+        }
+
+        #endregion
     }
 }
