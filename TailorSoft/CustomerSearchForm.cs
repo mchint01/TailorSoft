@@ -29,17 +29,28 @@ namespace TailorSoft
             addCustomerForm.ShowDialog();
         }
 
-        private void btnSearchCustomerByPhone_Click(object sender, EventArgs e)
+        private void btnSearchCustomer_Click(object sender, EventArgs e)
         {
             txtCustomerPhoneSearch_TextChanged(sender, e);
 
-            if (string.IsNullOrWhiteSpace(txtCustomerPhoneSearch.Text) ||
-                txtCustomerPhoneSearch.Text.Length > 14 ||
-                txtCustomerPhoneSearch.Text.Length < 5)
+            if (string.IsNullOrWhiteSpace(txtCustomerPhoneSearch.Text))
             {
                 lblCustomerSearchError.Text = @"Customer phone number is required to search, and it should be in valid format.";
 
                 return;
+            }
+
+            if (txtCustomerPhoneSearch.Text.Length > 14)
+            {
+                lblCustomerSearchError.Text =
+                    @"Customer phone number is required to search, and it should be in valid format.";
+
+                return;
+            }
+
+            if (txtCustomerPhoneSearch.Text.Length < 5)
+            {
+
             }
 
             Cursor.Current = Cursors.WaitCursor;
@@ -47,6 +58,13 @@ namespace TailorSoft
             // get customer
             var customer = _customerManager.GetCustomerInfo(txtCustomerPhoneSearch.Text);
 
+            LoadCustomerDetails(customer);
+
+            Cursor.Current = Cursors.Arrow;
+        }
+
+        private void LoadCustomerDetails(CustomerInfo customer)
+        {
             if (customer == null)
             {
                 Cursor.Current = Cursors.Arrow;
@@ -197,8 +215,6 @@ namespace TailorSoft
             {
                 dgCustomerBills.Columns["Notes"].Visible = false;
             }
-
-            Cursor.Current = Cursors.Arrow;
         }
 
         private void dgCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -228,7 +244,7 @@ namespace TailorSoft
 
             var dialogResult = billForm.ShowDialog();
 
-            btnSearchCustomerByPhone_Click(sender, e);
+            btnSearchCustomer_Click(sender, e);
         }
 
         private void btnAddBill_Click(object sender, EventArgs e)
@@ -250,7 +266,7 @@ namespace TailorSoft
 
             var dialogResult = addBillForm.ShowDialog();
 
-            btnSearchCustomerByPhone_Click(sender, e);
+            btnSearchCustomer_Click(sender, e);
         }
 
         private void MenuAccounts_Click(object sender, EventArgs e)

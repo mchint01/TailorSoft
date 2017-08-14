@@ -82,7 +82,7 @@
             this.btnSearchCustomerByPhone.TabIndex = 1;
             this.btnSearchCustomerByPhone.Text = "Search";
             this.btnSearchCustomerByPhone.UseVisualStyleBackColor = true;
-            this.btnSearchCustomerByPhone.Click += new System.EventHandler(this.btnSearchCustomerByPhone_Click);
+            this.btnSearchCustomerByPhone.Click += new System.EventHandler(this.btnSearchCustomer_Click);
             // 
             // txtCustomerPhoneSearch
             // 
@@ -213,14 +213,14 @@
             // MenuAccounts
             // 
             this.MenuAccounts.Name = "MenuAccounts";
-            this.MenuAccounts.Size = new System.Drawing.Size(152, 22);
+            this.MenuAccounts.Size = new System.Drawing.Size(124, 22);
             this.MenuAccounts.Text = "Accounts";
             this.MenuAccounts.Click += new System.EventHandler(this.MenuAccounts_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
