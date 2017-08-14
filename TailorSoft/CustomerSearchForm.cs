@@ -49,10 +49,22 @@ namespace TailorSoft
 
             if (customer == null)
             {
-                lblCustomerSearchError.Text = $@"Customer with phone number {txtCustomerPhoneSearch.Text} not found." +
-                                              Environment.NewLine + @"Add Customer to create a new record.";
-
                 Cursor.Current = Cursors.Arrow;
+
+                var dResult = MessageBox.Show(
+                    @"Customer record not found, would you like to add this customer?",
+                    @"Create Customer",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (dResult != DialogResult.Yes) return;
+
+                var addCustomerForm = new CustomerInfoForm(new Phone
+                {
+                    PhoneNumber = txtCustomerPhoneSearch.Text
+                });
+
+                addCustomerForm.ShowDialog();
 
                 return;
             }

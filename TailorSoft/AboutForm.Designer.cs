@@ -40,7 +40,7 @@
             this.lblAbout.Name = "lblAbout";
             this.lblAbout.Size = new System.Drawing.Size(415, 65);
             this.lblAbout.TabIndex = 0;
-            this.lblAbout.Text = "Proprietor: Jyothi Chinta";
+            this.lblAbout.Text = "Proprietor: Chinta Jyothi";
             this.lblAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblAboutExt

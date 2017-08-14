@@ -37,6 +37,17 @@ namespace TailorSoft
             Cursor.Current = Cursors.Arrow;
         }
 
+        public CustomerInfoForm(Phone phoneNumber)
+        {
+            InitializeComponent();
+
+            _customerManager = new CustomerManager();
+
+            _logManager = new LogManager();
+
+            txtCustomerPhone.Text = phoneNumber.PhoneNumber;
+        }
+
         private void btnAddCustomerInfo_Click(object sender, EventArgs e)
         {
             lblAddCustomerFormError.Text = null;
