@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using TailorSoft.Business;
-using TailorSoft.Business.Interfaces;
 using TailorSoft.Business.Models;
 
 namespace TailorSoft
 {
     public partial class BillSearchForm : Form
     {
-        private readonly ICustomerManager _customerManager;
-
         public BillSearchForm(int searchedBillNumber, IList<BillInfo> bills)
         {
             InitializeComponent();
-
-            _customerManager = new CustomerManager();
 
             // customer bills data source
             dgCustomerBills.DataSource = bills;
