@@ -126,6 +126,12 @@
     <Compile Include="AccountForm.Designer.cs">
       <DependentUpon>AccountForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BillSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BillSearchForm.Designer.cs">
+      <DependentUpon>BillSearchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomerBillForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AccountForm.resx">
       <DependentUpon>AccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BillSearchForm.resx">
+      <DependentUpon>BillSearchForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomerBillForm.resx">
       <DependentUpon>CustomerBillForm.cs</DependentUpon>

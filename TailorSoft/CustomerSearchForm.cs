@@ -29,7 +29,7 @@ namespace TailorSoft
             addCustomerForm.ShowDialog();
         }
 
-        private void btnSearchCustomer_Click(object sender, EventArgs e)
+        public void btnSearchCustomer_Click(object sender, EventArgs e)
         {
             txtCustomerPhoneSearch_TextChanged(sender, e);
 
@@ -48,12 +48,33 @@ namespace TailorSoft
                 return;
             }
 
+            Cursor.Current = Cursors.WaitCursor;
+
             if (txtCustomerPhoneSearch.Text.Length < 5)
             {
+                // get bills
+                var billNumber = Convert.ToInt32(txtCustomerPhoneSearch.Text);
+                var bills = _customerManager.GetBills(billNumber);
 
+                if (bills == null || !bills.Any())
+                {
+                    MessageBox.Show(
+                        @"Bill record not found",
+                        @"Information",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    return;
+                }
+
+                Cursor.Current = Cursors.Arrow;
+
+                var billSearchForm = new BillSearchForm(billNumber, bills);
+
+                billSearchForm.ShowDialog();
+
+                return;
             }
-
-            Cursor.Current = Cursors.WaitCursor;
 
             // get customer
             var customer = _customerManager.GetCustomerInfo(txtCustomerPhoneSearch.Text);
@@ -103,12 +124,6 @@ namespace TailorSoft
             var customerBills = _customerManager.GetCustomerBills(customer.Id);
 
             if (!customerBills.Any()) return;
-
-            // add customer name
-            foreach (var bill in customerBills)
-            {
-                bill.CustomerName = customer.Name;
-            }
 
             // customer bills data source
             dgCustomerBills.DataSource = customerBills;

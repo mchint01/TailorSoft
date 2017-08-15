@@ -326,7 +326,75 @@ namespace TailorSoft.Business
             using (var db = new ApplicationDbContext())
             {
                 var bills =
-                    db.Bills.AsNoTracking().Where(x => x.CustomerId == customerId).OrderByDescending(x => x.BillNumber);
+                    db.Bills.AsNoTracking()
+                        .Where(x => x.CustomerId == customerId)
+                        .OrderByDescending(x => x.BillNumber);
+
+                var customer = db.Customers.AsNoTracking()
+                    .FirstOrDefault(x => x.Id == customerId);
+
+                var customerName = string.Empty;
+
+                if (customer != null)
+                    customerName = customer.Name;
+
+                foreach (var bill in bills)
+                {
+                    list.Add(new BillInfo
+                    {
+                        BillDt = bill.BillDt,
+                        BillNumber = bill.BillNumber,
+                        BillStatus = bill.BillStatus,
+                        CustomerId = bill.CustomerId,
+                        CustomerName = customerName,
+                        DeliveredDt = bill.DeliveredDt,
+                        Id = bill.Id,
+                        Notes = bill.Notes,
+
+                        JacketMeasurements = bill.JacketMeasurements,
+                        NumberOfJackets = bill.NumberOfJackets,
+                        JacketRate = bill.JacketRate,
+
+                        SuitMeasurements = bill.SuitMeasurements,
+                        NumberOfSuits = bill.NumberOfSuits,
+                        SuitRate = bill.SuitRate,
+
+                        SafaryMeasurements = bill.SafaryMeasurements,
+                        NumberOfSafary = bill.NumberOfSafary,
+                        SafaryRate = bill.SafaryRate,
+
+                        TrouserMeasurements = bill.TrouserMeasurements,
+                        NumberOfTrousers = bill.NumberOfTrousers,
+                        TrouserRate = bill.TrouserRate,
+
+                        ShirtMeasurements = bill.ShirtMeasurements,
+                        NumberOfShirts = bill.NumberOfShirts,
+                        ShirtRate = bill.ShirtRate,
+
+                        OtherMeasurements = bill.OtherMeasurements,
+                        NumberOfOthers = bill.NumberOfOthers,
+                        OtherRate = bill.OtherRate,
+
+                        PreferredInternalDeliveryDt = bill.PreferredInternalDeliveryDt,
+                        PreferredDeliveryDt = bill.PreferredDeliveryDt,
+                        ReadyForDeliveryDt = bill.ReadyForDeliveryDt,
+                        SentToTailorDt = bill.SentToTailorDt
+                    });
+                }
+            }
+
+            return list;
+        }
+
+        public IList<BillInfo> GetBills(int billNumber)
+        {
+            var list = new List<BillInfo>();
+
+            using (var db = new ApplicationDbContext())
+            {
+                var bills =
+                    db.Bills.AsNoTracking().Where(x => x.BillNumber == billNumber)
+                        .OrderByDescending(x => x.BillNumber);
 
                 foreach (var bill in bills)
                 {
@@ -372,7 +440,36 @@ namespace TailorSoft.Business
                 }
             }
 
+            var customerNames = GetCustomerNames(list.Select(x => x.CustomerId).ToList());
+
+            foreach (var bill in list)
+            {
+                string customerName;
+
+                if (customerNames.TryGetValue(bill.CustomerId, out customerName))
+                {
+                    bill.CustomerName = customerName;
+                }
+            }
+
             return list;
+        }
+
+        public IDictionary<Guid, string> GetCustomerNames(IList<Guid> customerIds)
+        {
+            var disctinctCustomerIds = customerIds.Distinct();
+
+            using (var db = new ApplicationDbContext())
+            {
+                return
+                    db.Customers.AsNoTracking()
+                        .Where(x => disctinctCustomerIds.Contains(x.Id))
+                        .Select(x => new
+                        {
+                            x.Id,
+                            x.Name
+                        }).ToDictionary(x => x.Id, x => x.Name);
+            }
         }
 
         public FileExportResponse ExportMonthlyBillDetailsAsExcel(DateTime start,

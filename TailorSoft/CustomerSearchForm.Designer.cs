@@ -131,9 +131,9 @@
             this.lblEnterCustomerPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEnterCustomerPhone.Location = new System.Drawing.Point(16, 60);
             this.lblEnterCustomerPhone.Name = "lblEnterCustomerPhone";
-            this.lblEnterCustomerPhone.Size = new System.Drawing.Size(202, 17);
+            this.lblEnterCustomerPhone.Size = new System.Drawing.Size(203, 17);
             this.lblEnterCustomerPhone.TabIndex = 8;
-            this.lblEnterCustomerPhone.Text = "Enter Customer phone number";
+            this.lblEnterCustomerPhone.Text = "Customer phone or Bill number";
             // 
             // dgCustomerBills
             // 
